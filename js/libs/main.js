@@ -17,6 +17,10 @@ const IMG_URL = 'https://image.tmdb.org/t/p/w185_and_h278_bestv2';
     }
   })
 
+  $('.reviews__close').click(()=>{
+    removeReviews()
+  })
+
   //FUNCTIONS
   async function getMovie() {
     let query = $('.search__field').val()
@@ -83,62 +87,64 @@ const IMG_URL = 'https://image.tmdb.org/t/p/w185_and_h278_bestv2';
     return movieDOM
   }
 
-  // async function getReviews(id) {
+  async function getReviews(id) {
 
-  //   let url = `${API_URL}/movie/${id}/reviews`
+    let url = `${API_URL}/movie/${id}/reviews?api_key=${API_KEY}`
 
-  //   try {
-  //     let response = await fetch(url)
-  //     let res = await response.json()
-  //     console.log(res)
+    try {
+      let response = await fetch(url)
+      let res = await response.json()
+      console.log(res)
 
-  //     if (res.results.length === 0) {
-  //       alert('No review found')
-  //     } else { 
-  //       res.results.find(() => {
-  //       console.log(res.results)
-  //       res.results.forEach(() => {
-  //       $('.window').addClass('hide--off')
-  //       $('.reviews__author').text(res.results[0].author)
-  //       $('.reviews__content').text(res.results[0].content)
-  //       })
-  //     })
-  //   } 
-  // }
-  //   catch(e) {
-  //     alert('Error!')
-  //   }
-  // }
-
-  function getReviews(id) {
-    
-    $.ajax({
-      url: `${API_URL}/movie/${id}/reviews`, // дописать после ид /review or /reviews
-      type: 'GET',
-      dataType: 'json',
-      data: {
-        api_key: API_KEY
-      }
-    }).then((res) => {
       if (res.results.length === 0) {
-          alert('No review is found')
-        } else { res.results.find(() => {
-          console.log(res.results)
-          res.results.forEach(() => {
-          $('.window').addClass('hide--off')
-          $('.reviews__author').text(res.results[0].author)
-          $('.reviews__content').text(res.results[0].content)
-          $('reviews__close').click(() => {
-            $('.window').removeClass('hide--off')
-            // $(this).parent('.window').removeClass('hide--off')
-          })
+        alert('No review found')
+      } else { 
+        res.results.find(() => {
+        console.log(res.results)
+        res.results.forEach(() => {
+        $('.window').addClass('hide--off')
+        $('.reviews__author').text(res.results[0].author)
+        $('.reviews__content').text(res.results[0].content)
         })
-        })
-        }
       })
+    } 
+  }
+    catch(e) {
+      alert('Error!')
+    }
   }
 
-  
+  // function getReviews(id) {
+    
+  //   $.ajax({
+  //     url: `${API_URL}/movie/${id}/reviews`, // дописать после ид /review or /reviews
+  //     type: 'GET',
+  //     dataType: 'json',
+  //     data: {
+  //       api_key: API_KEY
+  //     }
+  //   }).then((res) => {
+  //     if (res.results.length === 0) {
+  //         alert('No review is found')
+  //       } else { res.results.find(() => {
+  //         console.log(res.results)
+  //         res.results.forEach(() => {
+  //         $('.window').addClass('hide--off')
+  //         $('.reviews__author').text(res.results[0].author)
+  //         $('.reviews__content').text(res.results[0].content)
+  //         $('reviews__close').click(() => {
+  //           $('.window').removeClass('hide--off')
+  //           // $(this).parent('.window').removeClass('hide--off')
+  //         })
+  //       })
+  //       })
+  //       }
+  //     })
+  // }
+
+  function removeReviews() {
+    $('.window').removeClass('hide-off')
+  }
 
 
 
