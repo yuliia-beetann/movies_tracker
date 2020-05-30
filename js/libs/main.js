@@ -21,6 +21,14 @@ const IMG_URL = 'https://image.tmdb.org/t/p/w185_and_h278_bestv2';
     removeReviews()
   })
 
+  $('.window').mouseup(function (e){ 
+    let div = $('.reviews')
+    if (!div.is(e.target) 
+        && div.has(e.target).length === 0) { 
+          removeReviews()
+    }
+  })
+
   //FUNCTIONS
   async function getMovie() {
     let query = $('.search__field').val()
@@ -143,7 +151,8 @@ const IMG_URL = 'https://image.tmdb.org/t/p/w185_and_h278_bestv2';
   // }
 
   function removeReviews() {
-    $('.window').removeClass('hide-off')
+    console.log('test')
+    $('.window').removeClass('hide--off')
   }
 
 
